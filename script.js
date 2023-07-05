@@ -20,7 +20,7 @@ export function setupMap(containerId, serverUrl){
 }
 
 // Add raster layer from GeoJSON
-/*export function renderRaster(geojsonFilePaths) {
+export function renderRaster(geojsonFilePaths) {
   geojsonFilePaths.forEach((geojsonFilePath) => {
     fetch(geojsonFilePath)
       .then((response) => response.json())
@@ -31,7 +31,10 @@ export function setupMap(containerId, serverUrl){
         // Add the raster source
         map.addSource(rasterSourceId, {
           type: "raster",
-          tiles: [`${cogServerUrl}/${geojsonFilePath}/{z}/{x}/{y}`], // Replace with the path to your raster tiles
+          tiles: [`${COG_URL}` +
+          `/cog/tiles` +
+          `/{z}/{x}/{y}.png?url=${TITILER_STATIC}` +
+          path], // Replace with the path to your raster tiles
           tileSize: 256,
         });
 
@@ -52,7 +55,7 @@ export function setupMap(containerId, serverUrl){
         console.error("Error loading GeoJSON file:", error);
       });
   });
-}*/
+}
 
 
 // Add vector layer from GeoJSON

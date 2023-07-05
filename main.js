@@ -1,4 +1,4 @@
-import { setupMap, renderVector } from "./script.js";
+import { setupMap, renderVector, renderRaster } from "./script.js";
 
 // Turn component with given id into mapbox 
 // Use the given COG server url for rendering the raster layers
@@ -13,7 +13,7 @@ renderVector([
 
 // Render all given ortho urls
 // Center on first raster url
-/*renderRaster([
+renderRaster([
   "https://cdn-dev.kesowa.com/raster/a0789482-62c7-4ab5-b9a4-9f83694d0a9e.tif",
   "https://cdn-dev.kesowa.com/raster/f6b443a1-7724-4bd6-9be9-4f33fd0fc98c.tif"
-])*/
+])
