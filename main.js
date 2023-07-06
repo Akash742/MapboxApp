@@ -7,8 +7,8 @@ setupMap("map", "https://cog-nk.kesowa.com").then(() =>{
   // Center on first geojson url
   // Render all given geojson urls
   renderVector([
-    "https://cdn-dev.kesowa.com/vector/00854a1e-568d-42db-84e9-a310df7593c9.geojson",
-    "https://cdn-dev.kesowa.com/vector/59af3119-fd68-48d0-966a-9a0008ec2b18.geojson"
+    "http://172.17.0.1:5151/vector/00854a1e-568d-42db-84e9-a310df7593c9.geojson",
+    "http://172.17.0.1:5151/vector/59af3119-fd68-48d0-966a-9a0008ec2b18.geojson"
   ])
 
   // Center on first raster url

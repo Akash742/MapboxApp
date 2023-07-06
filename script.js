@@ -21,15 +21,39 @@ export async function setupMap(containerId, serverUrl) {
 }
 
 // Add raster layer from GeoJSON
-export function renderRaster(geojsonFilePaths) {
-  geojsonFilePaths.forEach((geojsonFilePath) => {
+export async function renderRaster(geojsonFilePaths) {
+  for (const geojsonFilePath of geojsonFilePaths) {
     const rasterSourceId = `raster-source-${geojsonFilePath}`;
     const rasterLayerId = `raster-layer-${geojsonFilePath}`;
+
+    let metaDataURL = `${cogServerUrl}/cog/statistics?url=${geojsonFilePath}`;
+    //let metaDataURL = `http://172.31.6.26:8000/cog/metadata?url=http://localhost:5011${tif_loc}`;
+    req.log.info("fetching metadata from titiler");
+    let response = await fetch(metaDataURL, {
+      method: "GET",
+    });
+    req.log.info(response), "getResponse data :  ";
+    let metadata = await response.json();
+    req.log.info(metadata, "get metadata data :  ");
+    //-------handle for detail:not found----
+    minP = metadata["1"]["min"];
+    maxP = metadata["1"]["max"];
+    metaDataURL = `${cogServerUrl}/cog/info?url=${geojsonFilePath}`;
+    response = await fetch(metaDataURL, {
+      method: "GET",
+    });
+    metadata = await response.json();
+    center = {
+      lat: (metadata["bounds"][1] + metadata["bounds"][3]) / 2,
+      lng: (metadata["bounds"][0] + metadata["bounds"][2]) / 2,
+    };
 
     // Add the raster source
     map.addSource(rasterSourceId, {
       type: "raster",
-      tiles: [`${cogServerUrl}/cog/tiles/{z}/{x}/{y}.png?url=${geojsonFilePath}`], // Replace with the path to your raster tiles
+      tiles: [
+        `${cogServerUrl}/cog/tiles/{z}/{x}/{y}.png?url=${geojsonFilePath}`,
+      ], // Replace with the path to your raster tiles
       tileSize: 256,
     });
 
@@ -45,7 +69,7 @@ export function renderRaster(geojsonFilePaths) {
         // Add more paint properties as needed
       },*/
     });
-  });
+  }
 }
 
 // Add vector layer from GeoJSON
